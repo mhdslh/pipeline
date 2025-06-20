@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Step1:
+    runs-on: ubuntu
+    continue-on-error: true
+    steps:
+      - name: hi
+        run: |
+          echo "Hi"
+      - name: wow
+        continue-on-error: true
+        run: |
+          echo "will fail"
+          exit 1
+      - name: oops
+        run: |
+          echo "oops"
+
+  Step2:
+    runs-on: ubuntu
+    needs: [Step1]
+    steps:
+    - name: bye
+      run: |
+        echo "Bye"
+
+  
