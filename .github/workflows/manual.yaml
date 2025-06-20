@@ -2,23 +2,21 @@ name: Test
 
 on:
   workflow_dispatch:
+      inputs:
+        username:
+          description: 'A username passed from the caller workflow'
+          default: 'mohammad'
+          required: false
+          type: string
 
 jobs:
   Step1:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    if: ${{ inputs.username == 'mohammad' }}
     steps:
       - name: hi
         run: |
-          echo "Hi"
-      - name: wow
-        run: |
-          echo "will fail"
-          exit 1
-      - name: oops
-        run: |
-          echo "oops"
-          exit 1
+          echo ${{ inputs.username }}
 
   Step2:
     runs-on: ubuntu-latest
@@ -26,6 +24,6 @@ jobs:
     steps:
     - name: bye
       run: |
-        echo "Bye"
+        echo ${{ inputs.username }}
 
   
